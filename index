@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ICP Demo Day</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;700;900&family=Montserrat:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:      #00205b;
+      --gold:      #e9dd90;
+      --gold-dark: #7a6830;
+      --sky:       #8dc8e8;
+      --black:     #0a0a0a;
+      --white:     #ffffff;
+      --off-white: #f4f4f4;
+      --rule:      #cccccc;
+      --muted:     #3a3a4a;
+      --spartan:   'League Spartan', sans-serif;
+      --mont:      'Montserrat', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: var(--mont);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV DOTS ───────────────────────────────────── */
+    .section-nav {
+      position: fixed;
+      right: 28px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 100;
+    }
+    .nav-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--rule);
+      transition: all 0.3s;
+    }
+    .nav-dot:hover, .nav-dot.active {
+      background: var(--navy);
+      transform: scale(1.6);
+    }
+
+    /* ── HERO ───────────────────────────────────────── */
+    .hero {
+      background: var(--white);
+      color: var(--black);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      padding: 96px 80px 80px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 4px solid var(--navy);
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 6px;
+      background: var(--navy);
+    }
+
+    .hero-eyebrow {
+      font-family: var(--spartan);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      color: var(--navy);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards 0.1s;
+    }
+
+    .hero-title {
+      font-family: var(--spartan);
+      font-size: clamp(4rem, 7vw, 7rem);
+      font-weight: 900;
+      line-height: 0.9;
+      color: var(--navy);
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.2s;
+    }
+
+    .hero-title span {
+      color: var(--black);
+      display: block;
+    }
+
+    .hero-tagline {
+      margin-top: 28px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 440px;
+      line-height: 1.8;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.32s;
+    }
+
+    .hero-meta {
+      margin-top: 40px;
+      display: flex;
+      gap: 36px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.42s;
+    }
+
+    .hero-meta-item {
+      font-family: var(--spartan);
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      color: var(--navy);
+      text-transform: uppercase;
+    }
+
+    .hero-meta-item strong {
+      display: block;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--black);
+      letter-spacing: 0;
+      margin-top: 4px;
+      font-family: var(--spartan);
+    }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.48s;
+    }
+
+    .timeline-card {
+      border: 1px solid var(--rule);
+      border-left: 4px solid var(--navy);
+      padding: 18px 22px;
+      background: var(--off-white);
+      transition: background 0.2s;
+    }
+    .timeline-card:hover { background: #e8eef8; }
+
+    .timeline-label {
+      font-family: var(--spartan);
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      color: var(--navy);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .timeline-text {
+      font-family: var(--spartan);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--black);
+    }
+    .timeline-sub {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* ── SECTION SHELL ──────────────────────────────── */
+    section {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 88px 80px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .section-eyebrow {
+      font-family: var(--spartan);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      color: var(--navy);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: var(--spartan);
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1.05;
+      margin-bottom: 48px;
+    }
+
+    .section-title em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--black);
+    }
+
+    /* ── PITCH BLOCK ────────────────────────────────── */
+    .pitch-block {
+      background: var(--navy);
+      color: var(--white);
+      padding: 52px 56px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pitch-block::before {
+      content: '"';
+      position: absolute;
+      top: -28px; left: 40px;
+      font-family: var(--spartan);
+      font-size: 10rem;
+      font-weight: 900;
+      color: var(--gold);
+      opacity: 0.25;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .pitch-block p {
+      font-size: 1.15rem;
+      line-height: 1.9;
+      color: var(--white);
+    }
+
+    .pitch-block strong {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    /* ── REQ GRID ───────────────────────────────────── */
+    .req-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+
+    .req-card {
+      background: var(--white);
+      padding: 28px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .req-card::after {
+      content: attr(data-num);
+      position: absolute;
+      bottom: -12px; right: 16px;
+      font-family: var(--spartan);
+      font-size: 5rem;
+      font-weight: 900;
+      color: var(--navy);
+      opacity: 0.04;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .req-card-label {
+      font-family: var(--spartan);
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      color: var(--navy);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .req-card-title {
+      font-family: var(--spartan);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 10px;
+    }
+
+    .req-card-body {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .req-card-body code {
+      font-family: 'Courier New', monospace;
+      color: var(--navy);
+      font-size: 0.84rem;
+      background: var(--off-white);
+      padding: 1px 5px;
+      border: 1px solid var(--rule);
+    }
+
+    /* ── SESSION BAR ────────────────────────────────── */
+    .session-bar {
+      display: flex;
+      height: 52px;
+      gap: 3px;
+      margin-bottom: 16px;
+    }
+
+    .bar-seg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--spartan);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .seg-plan    { background: var(--navy); color: var(--sky);  flex: 0 0 calc(50/90 * 100%); }
+    .seg-present { background: var(--gold); color: var(--navy); flex: 1; }
+
+    .session-legend {
+      display: flex;
+      gap: 28px;
+      font-size: 0.82rem;
+      color: var(--black);
+      font-family: var(--spartan);
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    .legend-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 48px;
+    }
+
+    .mini-label {
+      font-family: var(--spartan);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: var(--navy);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .rule-list {
+      font-size: 0.9rem;
+      color: var(--black);
+      line-height: 2.1;
+      list-style: none;
+    }
+
+    .rule-list li::before {
+      content: '//';
+      font-family: var(--spartan);
+      color: var(--navy);
+      margin-right: 10px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    /* ── IDEAS ──────────────────────────────────────── */
+    .ideas-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      counter-reset: idea-counter;
+    }
+
+    .idea-chip {
+      background: var(--white);
+      padding: 22px 26px;
+      counter-increment: idea-counter;
+      transition: background 0.15s;
+    }
+
+    .idea-chip:hover { background: #f0eeea; }
+
+    .idea-chip::before {
+      content: "0" counter(idea-counter);
+      display: block;
+      font-family: var(--spartan);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .idea-chip strong {
+      display: block;
+      font-family: var(--spartan);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 4px;
+    }
+
+    .idea-chip p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── CODE BLOCK ─────────────────────────────────── */
+    .code-wrap {
+      background: var(--navy);
+      padding: 40px 44px;
+      position: relative;
+    }
+
+    .code-wrap::before {
+      content: 'JavaScript // Code.org App Lab';
+      display: block;
+      font-family: var(--spartan);
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ffffff22;
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0;
+    }
+
+    .copy-btn {
+      font-family: var(--spartan);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      padding: 8px 18px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .copy-btn:hover { background: #f5f0b0; }
+    .copy-btn:active { transform: scale(0.97); }
+    .copy-btn.copied { background: #b0e0b0; color: #004400; }
+
+    pre {
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 2.1;
+      color: #e0e8f0;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    .c  { color: #6a8aaa; }
+    .kw { color: var(--gold); font-weight: bold; }
+    .st { color: #90d4a0; }
+    .fn { color: #a8d8f0; }
+    .vr { color: var(--gold); }
+
+    /* ── RUBRIC ─────────────────────────────────────── */
+    .rubric-wrap {
+      border: 1px solid var(--rule);
+      overflow: hidden;
+    }
+
+    .rubric-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .rubric-table th {
+      font-family: var(--spartan);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 18px 20px;
+      text-align: left;
+      background: var(--navy);
+      border-bottom: 3px solid var(--gold);
+      font-weight: 700;
+    }
+
+    .rubric-table th:nth-child(1) { color: var(--white); width: 18%; }
+    .rubric-table th:nth-child(2) { color: #ffaaaa; }
+    .rubric-table th:nth-child(3) {
+      color: #ffffff;
+      background: #003a8c;
+      border-bottom: 3px solid var(--gold);
+      position: relative;
+    }
+    .rubric-table th:nth-child(3)::after {
+      content: ' ← THE GOAL';
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      display: block;
+      margin-top: 3px;
+    }
+    .rubric-table th:nth-child(4) {
+      color: #d4c060;
+      background: #1a1a00;
+      border-bottom: 3px solid #988443;
+      font-style: italic;
+    }
+    .rubric-table th:nth-child(4)::after {
+      content: ' above & beyond';
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      color: #988443;
+      display: block;
+      margin-top: 3px;
+      font-style: normal;
+    }
+
+    .rubric-table td {
+      padding: 20px 22px;
+      font-size: 0.9rem;
+      line-height: 1.65;
+      vertical-align: top;
+      border-bottom: 1px solid var(--rule);
+      background: var(--white);
+      color: var(--black);
+    }
+
+    .rubric-table tr:last-child td { border-bottom: none; }
+
+    .rubric-table td:nth-child(1) {
+      font-family: var(--spartan);
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--navy);
+      background: var(--off-white);
+    }
+
+    .rubric-table td:nth-child(2) { color: #880000; }
+
+    .rubric-table td:nth-child(3) {
+      background: #eef4ff;
+      color: #001a4a;
+      font-weight: 600;
+      border-left: 3px solid #003a8c;
+      border-right: 3px solid #003a8c;
+    }
+
+    .rubric-table td:nth-child(4) {
+      background: #fdfaee;
+      color: #3a3000;
+      font-style: italic;
+      border-right: 2px solid #c8b850;
+    }
+
+    .score-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      font-family: var(--spartan);
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    .score-1 { background: #ffdddd; color: #880000; border: 1px solid #cc5555; }
+    .score-2 { background: #ddeeff; color: #003388; border: 2px solid #003a8c; }
+    .score-3 { background: #fffacc; color: #3a3000; border: 1px solid #998833; }
+
+    .rubric-note {
+      margin-top: 24px;
+      padding: 20px 24px;
+      border-left: 4px solid var(--navy);
+      background: var(--off-white);
+      font-size: 0.9rem;
+      color: var(--black);
+      line-height: 1.8;
+    }
+
+    /* ── SHARE ──────────────────────────────────────── */
+    .share-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+
+    .share-step {
+      background: var(--white);
+      padding: 32px 28px;
+      text-align: center;
+    }
+
+    .step-num {
+      font-family: var(--spartan);
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--navy);
+      opacity: 0.18;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .step-title {
+      font-family: var(--spartan);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--navy);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .step-body {
+      font-size: 0.9rem;
+      color: var(--black);
+      line-height: 1.7;
+    }
+
+    /* ── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: var(--navy);
+      border-top: 4px solid var(--gold);
+      padding: 36px 80px;
+      text-align: center;
+      font-family: var(--spartan);
+      font-size: 0.6rem;
+      letter-spacing: 0.28em;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+
+    /* ── ANIMATIONS ─────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px; left: 80px;
+      font-family: var(--spartan);
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      color: var(--navy);
+      font-weight: 700;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(5px); }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="section-nav">
+    <a href="#hero"     class="nav-dot active"></a>
+    <a href="#mission"  class="nav-dot"></a>
+    <a href="#standard" class="nav-dot"></a>
+    <a href="#session"  class="nav-dot"></a>
+    <a href="#ideas"    class="nav-dot"></a>
+    <a href="#template" class="nav-dot"></a>
+    <a href="#rubric"   class="nav-dot"></a>
+    <a href="#share"    class="nav-dot"></a>
+  </nav>
+
+  <!-- ══ HERO ══════════════════════════════════════ -->
+  <div class="hero" id="hero">
+    <div>
+      <p class="hero-eyebrow">ICP &nbsp;//&nbsp; Computer Science Principles</p>
+      <h1 class="hero-title">Demo<span>Day.</span></h1>
+      <p class="hero-tagline">
+        You and your partner are co-founders of a tiny software company.
+        You have 50 minutes to design and build a working app.
+        Then you ship it, live, in front of everyone.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">Format<strong>Partners</strong></div>
+        <div class="hero-meta-item">Total Time<strong>90 min</strong></div>
+        <div class="hero-meta-item">Build<strong>~50 min</strong></div>
+        <div class="hero-meta-item">Demo<strong>90 sec</strong></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="timeline-card">
+        <div class="timeline-label">Phase 1 &nbsp;//&nbsp; 0:00 - 0:50</div>
+        <div class="timeline-text">Plan + Build Sprint</div>
+        <div class="timeline-sub">Plan doc, UI design, code</div>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-label">Phase 2 &nbsp;//&nbsp; 0:50 - 1:30</div>
+        <div class="timeline-text">Demo Day Presentations</div>
+        <div class="timeline-sub">90 seconds per team, all teams present</div>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-label">Submission</div>
+        <div class="timeline-text">Planning Doc + App Lab Link</div>
+        <div class="timeline-sub">Both partners submit their own link</div>
+      </div>
+    </div>
+    <div class="scroll-hint">Scroll to explore</div>
+  </div>
+
+  <!-- ══ MISSION ════════════════════════════════════ -->
+  <section id="mission">
+    <p class="section-eyebrow">The Mission</p>
+    <h2 class="section-title">What you're <em>building</em></h2>
+    <div class="pitch-block reveal">
+      <p>
+        Build an app that gives the user a <strong>smart response</strong> based on something they do or enter.
+        <br /><br />
+        Pick your topic. Design your screen from scratch. Write the logic.
+        The constraints are the engineering requirements, not the idea.
+        Your app does <strong>one thing well.</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ STANDARD ═══════════════════════════════════ -->
+  <section id="standard">
+    <p class="section-eyebrow">The Standard</p>
+    <h2 class="section-title">What every app <em>must do</em></h2>
+    <div class="req-grid">
+      <div class="req-card reveal" data-num="01">
+        <div class="req-card-label">Required</div>
+        <div class="req-card-title">Variables</div>
+        <div class="req-card-body">
+          At least one <code>var</code> that changes when the user interacts.
+          A plain variable that stores and updates. No lists yet.
+        </div>
+      </div>
+      <div class="req-card reveal" data-num="02">
+        <div class="req-card-label">Required</div>
+        <div class="req-card-title">onEvent Handlers</div>
+        <div class="req-card-body">
+          At least one <code>onEvent()</code> per interactive element.
+          Each one updates a variable, then calls <code>updateScreen()</code>.
+        </div>
+      </div>
+      <div class="req-card reveal" data-num="03">
+        <div class="req-card-label">Required</div>
+        <div class="req-card-title">updateScreen Function</div>
+        <div class="req-card-body">
+          One <code>updateScreen()</code> function handles all visual changes.
+          Every <code>onEvent</code> must call it. All <code>setText</code> calls live here.
+        </div>
+      </div>
+      <div class="req-card reveal" data-num="04">
+        <div class="req-card-label">Required</div>
+        <div class="req-card-title">Concatenation</div>
+        <div class="req-card-body">
+          At least one output combines text and a variable:
+          <code>"Your result: " + result</code>. On screen, not in the console.
+        </div>
+      </div>
+      <div class="req-card reveal" data-num="05">
+        <div class="req-card-label">Required</div>
+        <div class="req-card-title">Conditional Logic</div>
+        <div class="req-card-body">
+          At least <code>3 if statements</code>: minimum 2 full <code>if/else</code> blocks
+          and 1 standalone <code>if</code>. Your app decides something.
+        </div>
+      </div>
+      <div class="req-card reveal" data-num="06">
+        <div class="req-card-label">Required</div>
+        <div class="req-card-title">UI Built from Scratch</div>
+        <div class="req-card-body">
+          Design Mode only, no starter templates.
+          Purpose should be obvious within the first 10 seconds.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SESSION ════════════════════════════════════ -->
+  <section id="session">
+    <p class="section-eyebrow">Session Plan</p>
+    <h2 class="section-title">Your <em>90 minutes</em></h2>
+    <div class="reveal">
+      <div class="session-bar">
+        <div class="bar-seg seg-plan">Plan + Build &nbsp;(50 min)</div>
+        <div class="bar-seg seg-present">Demo Day &nbsp;(40 min)</div>
+      </div>
+      <div class="session-legend">
+        <span><span class="legend-dot" style="background:var(--navy)"></span>0:00 - 0:50 &nbsp;// Build Sprint</span>
+        <span><span class="legend-dot" style="background:#e9dd90; border:1px solid #998833;"></span>0:50 - 1:30 &nbsp;// Presentations</span>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="reveal">
+        <div class="mini-label">Build Sprint Rules</div>
+        <ul class="rule-list">
+          <li>Complete all 5 planning checkboxes before coding</li>
+          <li>Both partners build their own identical copy</li>
+          <li>Share your screen via the App Lab share link</li>
+          <li>Apps should be identical between partners</li>
+          <li>Finish early? Add something exceptional and earn a 3</li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <div class="mini-label">Demo Format &nbsp;// 90 Seconds</div>
+        <ul class="rule-list">
+          <li>Show the app running from the user's perspective</li>
+          <li>State the app name, purpose, and topic</li>
+          <li>Flip to code and point to one variable</li>
+          <li>Explain how updateScreen() works in your app</li>
+          <li>Both partners must speak</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ IDEAS ══════════════════════════════════════ -->
+  <section id="ideas">
+    <p class="section-eyebrow">Brainstorm Fuel</p>
+    <h2 class="section-title">An app that <em>...</em></h2>
+    <p style="font-size:0.92rem; color:var(--muted); margin-bottom:36px; max-width:520px;">
+      Starting points, not assignments. Change anything. Combine two. Make it yours.
+    </p>
+    <div class="ideas-grid">
+      <div class="idea-chip reveal">
+        <strong>Tells you what to eat</strong>
+        <p>User picks mood, time of day, or hunger level. App recommends a meal or snack category.</p>
+      </div>
+      <div class="idea-chip reveal">
+        <strong>Scores your day</strong>
+        <p>User rates sleep, water, and activity. App gives a wellness score and a reaction.</p>
+      </div>
+      <div class="idea-chip reveal">
+        <strong>Picks your outfit</strong>
+        <p>User enters weather and occasion. App tells them what kind of outfit to wear.</p>
+      </div>
+      <div class="idea-chip reveal">
+        <strong>Settles the debate</strong>
+        <p>User answers 3 quick questions. App declares a winner. Great for school drama.</p>
+      </div>
+      <div class="idea-chip reveal">
+        <strong>Reads your vibe</strong>
+        <p>User clicks through mood questions. App returns a vibe of the day with a playlist genre.</p>
+      </div>
+      <div class="idea-chip reveal">
+        <strong>Tells you if it's worth it</strong>
+        <p>User enters a price and frequency of use. App gives a purchase verdict.</p>
+      </div>
+      <div class="idea-chip reveal">
+        <strong>Ranks your weekend plan</strong>
+        <p>User enters activities. App scores the plan on fun, cost, and effort.</p>
+      </div>
+      <div class="idea-chip reveal">
+        <strong>Calculates the tip</strong>
+        <p>User enters bill total and satisfaction level. App calculates the tip and reacts.</p>
+      </div>
+      <div class="idea-chip reveal">
+        <strong>Decides if you need a jacket</strong>
+        <p>User inputs a temperature. App responds with outfit advice, getting more sarcastic at extremes.</p>
+      </div>
+      <div class="idea-chip reveal">
+        <strong>Builds a study plan</strong>
+        <p>User inputs hours until a test and confidence level. App tells them where to focus.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ STARTER TEMPLATE ════════════════════════════ -->
+  <section id="template">
+    <p class="section-eyebrow">Starter Template</p>
+    <h2 class="section-title">The <em>shape</em> of your code</h2>
+    <p style="font-size:0.92rem; color:var(--muted); margin-bottom:36px; max-width:580px;">
+      This is the architecture your app should follow. The comments tell you what goes where.
+      Replace them with your own code. Do not rename <code style="font-family:monospace;color:var(--navy);background:var(--off-white);padding:2px 6px;font-size:0.88rem;border:1px solid var(--rule);">updateScreen()</code>.
+    </p>
+    <div style="margin-bottom: 0; display:flex; justify-content:flex-end;">
+      <button class="copy-btn" id="copyBtn" onclick="copyCode()">Copy Code</button>
+    </div>
+    <div class="code-wrap reveal">
+<pre id="codeBlock">
+<span class="c">// === DEMO DAY ===</span>
+<span class="c">// App Name:</span>
+<span class="c">// Partner 1:</span>
+<span class="c">// Partner 2:</span>
+ ;
+ ;
+<span class="c">// ── VARIABLES ──────────────────────────────────────────</span>
+<span class="c">// Declare your variable(s) here.</span>
+<span class="c">// What does your app need to remember between events?</span>
+
+<span class="kw">var</span> <span class="vr">result</span> = <span class="st">""</span>;
+<span class="c">// add more variables here if your app needs them</span>
+ ;
+ ;
+<span class="c">// ── UPDATE SCREEN ──────────────────────────────────────</span>
+<span class="c">// This is the ONLY place setText() calls should go.</span>
+<span class="c">// Every onEvent must call this function when it's done.</span>
+
+<span class="kw">function</span> <span class="fn">updateScreen</span>() {
+  <span class="c">// setText("your_output_label_id", "Some text: " + result);</span>
+}
+ ;
+ ;
+<span class="c">// ── EVENT HANDLERS ─────────────────────────────────────</span>
+<span class="c">// One onEvent block per button or interactive element.</span>
+<span class="c">// Pattern: (1) update variable, (2) call updateScreen.</span>
+
+<span class="fn">onEvent</span>(<span class="st">"your_button_id"</span>, <span class="st">"click"</span>, <span class="kw">function</span>() {
+
+  <span class="c">// Step 1: update your variable(s)</span>
+  <span class="c">//   example: result = getText("your_input_id");</span>
+
+  <span class="c">// Step 2: use if/else to decide what result should be</span>
+  <span class="c">//   you need at least 2 if/else blocks + 1 standalone if</span>
+
+  <span class="c">// Step 3: always call updateScreen() last</span>
+  <span class="fn">updateScreen</span>();
+
+});
+</pre>
+    </div>
+  </section>
+
+  <!-- ══ RUBRIC ═════════════════════════════════════ -->
+  <section id="rubric">
+    <p class="section-eyebrow">Evaluation</p>
+    <h2 class="section-title">How you'll be <em>scored</em></h2>
+    <p style="font-size:0.92rem; color:var(--black); margin-bottom:36px; max-width:600px; line-height:1.8;">
+      Four categories. Three scores. <strong>A 2 is the goal</strong> -- it means your work meets the standard.
+      A 3 means you went above and beyond. A 1 means something is missing and must be fixed.
+    </p>
+    <div class="rubric-wrap reveal">
+      <table class="rubric-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th><span class="score-badge score-1">1</span>Unacceptable</th>
+            <th><span class="score-badge score-2">2</span>Acceptable &mdash; the goal</th>
+            <th><span class="score-badge score-3">3</span>Exceptional</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Functionality</td>
+            <td>App crashes, freezes, or fails to respond to input as intended.</td>
+            <td>App runs correctly. A user could pick it up and use it without guidance.</td>
+            <td>App handles unexpected inputs gracefully with a noticeably polished experience.</td>
+          </tr>
+          <tr>
+            <td>Code Requirements</td>
+            <td>One or more required elements are missing or non-functional.</td>
+            <td>All required elements present and working: variable(s), onEvent, updateScreen(), concatenation, 3+ if statements.</td>
+            <td>Code is clean, well-commented, and shows more sophisticated use of the required elements.</td>
+          </tr>
+          <tr>
+            <td>Design &amp; Clarity</td>
+            <td>UI is confusing or cluttered. Purpose unclear in the first 10 seconds.</td>
+            <td>UI is purposeful. A new user understands what the app does without being told.</td>
+            <td>Intentional visual choices meaningfully improve the user experience beyond the minimum.</td>
+          </tr>
+          <tr>
+            <td>Demo &amp; Explanation</td>
+            <td>Team cannot demo the app or explain what their code does.</td>
+            <td>Team demos the app, states its purpose, and can explain a variable, an onEvent, and updateScreen().</td>
+            <td>Explanation shows why decisions were made, not just what the code does. Both partners speak clearly.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="rubric-note reveal">
+      <strong>The standard is a 2.</strong> Most work should land here. A 3 is earned -- it requires clear extra craft or deeper thinking, and will not be given for simply completing the requirements. A 1 on any category must be revised and resubmitted until it reaches a 2. These four categories stay the same every sprint. Only the Code Requirements row updates as new concepts are added.
+    </div>
+  </section>
+
+  <!-- ══ SHARE ══════════════════════════════════════ -->
+  <section id="share">
+    <p class="section-eyebrow">Submission</p>
+    <h2 class="section-title">How to <em>submit</em> your app</h2>
+    <div class="share-steps">
+      <div class="share-step reveal">
+        <div class="step-num">01</div>
+        <div class="step-title">Finish Your App</div>
+        <div class="step-body">When your app is done, open your project in App Lab.</div>
+      </div>
+      <div class="share-step reveal">
+        <div class="step-num">02</div>
+        <div class="step-title">Copy Your Share Link</div>
+        <div class="step-body">Click the Share button in App Lab and copy the link it gives you.</div>
+      </div>
+      <div class="share-step reveal">
+        <div class="step-num">03</div>
+        <div class="step-title">Paste in Google Classroom</div>
+        <div class="step-body">Paste your link directly into the Google Classroom assignment. Both partners submit their own link.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>&nbsp;</footer>
+
+  <script>
+    // Copy code to clipboard
+    function copyCode() {
+      const raw = `// === DEMO DAY ===
+// App Name:
+// Partner 1:
+// Partner 2:
+ ;
+ ;
+// ── VARIABLES ──────────────────────────────────────────
+// Declare your variable(s) here.
+// What does your app need to remember between events?
+
+var result = "";
+// add more variables here if your app needs them
+ ;
+ ;
+// ── UPDATE SCREEN ──────────────────────────────────────
+// This is the ONLY place setText() calls should go.
+// Every onEvent must call this function when it's done.
+
+function updateScreen() {
+  // setText("your_output_label_id", "Some text: " + result);
+}
+ ;
+ ;
+// ── EVENT HANDLERS ─────────────────────────────────────
+// One onEvent block per button or interactive element.
+// Pattern: (1) update variable, (2) call updateScreen.
+
+onEvent("your_button_id", "click", function() {
+
+  // Step 1: update your variable(s)
+  //   example: result = getText("your_input_id");
+
+  // Step 2: use if/else to decide what result should be
+  //   you need at least 2 if/else blocks + 1 standalone if
+
+  // Step 3: always call updateScreen() last
+  updateScreen();
+
+});`;
+      navigator.clipboard.writeText(raw).then(() => {
+        const btn = document.getElementById('copyBtn');
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy Code';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 55);
+        }
+      });
+    }, { threshold: 0.07 });
+    reveals.forEach(el => revealObserver.observe(el));
+
+    // Active nav dot
+    const dotMap = {};
+    document.querySelectorAll('.section-nav a').forEach(d => {
+      dotMap[d.getAttribute('href').slice(1)] = d;
+    });
+    const dots = document.querySelectorAll('.nav-dot');
+    const secObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && dotMap[e.target.id]) {
+          dots.forEach(d => d.classList.remove('active'));
+          dotMap[e.target.id].classList.add('active');
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('[id]').forEach(s => secObserver.observe(s));
+  </script>
+</body>
+</html>
