@@ -22,16 +22,14 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html {
-      scroll-behavior: smooth;
-      font-size: clamp(16px, 1vw + 0.35rem, 18px);
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       background: var(--white);
       color: var(--black);
       font-family: var(--mont);
       font-weight: 300;
+      font-size: 17px;
       line-height: 1.7;
       overflow-x: hidden;
     }
@@ -60,6 +58,44 @@
       transform: scale(1.6);
     }
 
+    /* ── JUMP TO TOP ────────────────────────────────── */
+    .jump-top {
+      position: fixed;
+      left: 28px;
+      bottom: 36px;
+      width: 44px;
+      height: 44px;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px);
+      transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s;
+    }
+    .jump-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .jump-top:hover {
+      background: #003a8c;
+    }
+    .jump-top svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--white);
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
     /* ── HERO ───────────────────────────────────────── */
     .hero {
       background: var(--white);
@@ -84,7 +120,7 @@
 
     .hero-eyebrow {
       font-family: var(--spartan);
-      font-size: 0.8rem;
+      font-size: 0.95rem;
       font-weight: 700;
       letter-spacing: 0.25em;
       color: var(--navy);
@@ -111,7 +147,7 @@
 
     .hero-tagline {
       margin-top: 28px;
-      font-size: 0.95rem;
+      font-size: 1.08rem;
       color: var(--muted);
       max-width: 440px;
       line-height: 1.8;
@@ -122,15 +158,15 @@
     .hero-meta {
       margin-top: 40px;
       display: flex;
-      gap: 36px;
       flex-wrap: wrap;
+      gap: 28px 36px;
       opacity: 0;
       animation: fadeUp 0.6s ease forwards 0.42s;
     }
 
     .hero-meta-item {
       font-family: var(--spartan);
-      font-size: 0.75rem;
+      font-size: 0.88rem;
       letter-spacing: 0.18em;
       color: var(--navy);
       text-transform: uppercase;
@@ -138,7 +174,7 @@
 
     .hero-meta-item strong {
       display: block;
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       font-weight: 700;
       color: var(--black);
       letter-spacing: 0;
@@ -165,7 +201,7 @@
 
     .timeline-label {
       font-family: var(--spartan);
-      font-size: 0.75rem;
+      font-size: 0.88rem;
       letter-spacing: 0.18em;
       color: var(--navy);
       text-transform: uppercase;
@@ -174,65 +210,73 @@
     }
     .timeline-text {
       font-family: var(--spartan);
-      font-size: 1.05rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: var(--black);
     }
     .timeline-sub {
-      font-size: 0.85rem;
+      font-size: 0.95rem;
       color: var(--muted);
       margin-top: 2px;
     }
 
-    /* ── HERO TOC ───────────────────────────────────── */
-    .scroll-hint-wrap {
-      position: absolute;
-      left: 80px;
-      bottom: 32px;
-      max-width: 420px;
-      z-index: 2;
+    /* ── TABLE OF CONTENTS ──────────────────────────── */
+    .toc-block {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 40px 80px 48px;
+      border-bottom: 1px solid var(--rule);
     }
 
-    .scroll-hint {
-      position: static;
+    .toc-label {
       font-family: var(--spartan);
-      font-size: 0.6rem;
-      letter-spacing: 0.22em;
-      color: var(--navy);
+      font-size: 0.88rem;
       font-weight: 700;
+      letter-spacing: 0.25em;
+      color: var(--navy);
       text-transform: uppercase;
-      animation: bounce 2s infinite;
-      margin-bottom: 12px;
+      margin-bottom: 20px;
     }
 
-    .hero-divider {
-      border: 0;
-      border-top: 1px solid var(--rule);
-      margin: 0 0 14px 0;
-      width: 100%;
-    }
-
-    .hero-toc {
+    .toc-list {
+      list-style: none;
       display: flex;
       flex-wrap: wrap;
-      gap: 10px 14px;
+      gap: 10px 0;
+      counter-reset: toc-counter;
+    }
+
+    .toc-list li {
+      counter-increment: toc-counter;
+      width: 50%;
+    }
+
+    .toc-list a {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 10px;
       font-family: var(--spartan);
-      font-size: 0.72rem;
+      font-size: 1rem;
       font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
       color: var(--navy);
+      letter-spacing: 0.04em;
+      padding: 6px 0;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s, color 0.2s;
     }
 
-    .hero-toc a {
-      color: var(--navy);
-      opacity: 0.9;
-      transition: opacity 0.2s;
+    .toc-list a::before {
+      content: "0" counter(toc-counter);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--rule);
+      flex-shrink: 0;
     }
 
-    .hero-toc a:hover {
-      opacity: 1;
-      text-decoration: underline;
+    .toc-list a:hover {
+      color: var(--black);
+      border-bottom-color: var(--navy);
     }
 
     /* ── SECTION SHELL ──────────────────────────────── */
@@ -245,7 +289,7 @@
 
     .section-eyebrow {
       font-family: var(--spartan);
-      font-size: 0.75rem;
+      font-size: 0.9rem;
       font-weight: 700;
       letter-spacing: 0.25em;
       color: var(--navy);
@@ -255,7 +299,7 @@
 
     .section-title {
       font-family: var(--spartan);
-      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-size: clamp(2.1rem, 3.5vw, 2.8rem);
       font-weight: 900;
       color: var(--navy);
       line-height: 1.05;
@@ -291,7 +335,7 @@
     }
 
     .pitch-block p {
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       line-height: 1.9;
       color: var(--white);
     }
@@ -332,7 +376,7 @@
 
     .req-card-label {
       font-family: var(--spartan);
-      font-size: 0.72rem;
+      font-size: 0.85rem;
       letter-spacing: 0.22em;
       color: var(--navy);
       text-transform: uppercase;
@@ -342,14 +386,14 @@
 
     .req-card-title {
       font-family: var(--spartan);
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       font-weight: 700;
       color: var(--black);
       margin-bottom: 10px;
     }
 
     .req-card-body {
-      font-size: 0.88rem;
+      font-size: 1rem;
       color: var(--muted);
       line-height: 1.7;
     }
@@ -357,7 +401,7 @@
     .req-card-body code {
       font-family: 'Courier New', monospace;
       color: var(--navy);
-      font-size: 0.84rem;
+      font-size: 0.95rem;
       background: var(--off-white);
       padding: 1px 5px;
       border: 1px solid var(--rule);
@@ -366,7 +410,7 @@
     /* ── SESSION BAR ────────────────────────────────── */
     .session-bar {
       display: flex;
-      height: 52px;
+      height: 56px;
       gap: 3px;
       margin-bottom: 16px;
     }
@@ -376,12 +420,14 @@
       align-items: center;
       justify-content: center;
       font-family: var(--spartan);
-      font-size: 0.65rem;
+      font-size: 0.82rem;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      text-align: center;
-      padding: 0 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 12px;
     }
 
     .seg-plan    { background: var(--navy); color: var(--sky);  flex: 0 0 calc(50/90 * 100%); }
@@ -389,9 +435,9 @@
 
     .session-legend {
       display: flex;
-      gap: 28px;
       flex-wrap: wrap;
-      font-size: 0.82rem;
+      gap: 8px 28px;
+      font-size: 0.95rem;
       color: var(--black);
       font-family: var(--spartan);
       letter-spacing: 0.08em;
@@ -415,7 +461,7 @@
 
     .mini-label {
       font-family: var(--spartan);
-      font-size: 0.75rem;
+      font-size: 0.88rem;
       font-weight: 700;
       letter-spacing: 0.22em;
       color: var(--navy);
@@ -424,7 +470,7 @@
     }
 
     .rule-list {
-      font-size: 0.9rem;
+      font-size: 1rem;
       color: var(--black);
       line-height: 2.1;
       list-style: none;
@@ -435,7 +481,7 @@
       font-family: var(--spartan);
       color: var(--navy);
       margin-right: 10px;
-      font-size: 0.72rem;
+      font-size: 0.85rem;
       font-weight: 700;
     }
 
@@ -451,7 +497,7 @@
 
     .idea-chip {
       background: var(--white);
-      padding: 22px 26px;
+      padding: 24px 28px;
       counter-increment: idea-counter;
       transition: background 0.15s;
     }
@@ -462,7 +508,7 @@
       content: "0" counter(idea-counter);
       display: block;
       font-family: var(--spartan);
-      font-size: 0.72rem;
+      font-size: 0.85rem;
       font-weight: 700;
       letter-spacing: 0.2em;
       color: var(--navy);
@@ -472,14 +518,14 @@
     .idea-chip strong {
       display: block;
       font-family: var(--spartan);
-      font-size: 1rem;
+      font-size: 1.1rem;
       font-weight: 700;
       color: var(--black);
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .idea-chip p {
-      font-size: 0.85rem;
+      font-size: 0.97rem;
       color: var(--muted);
       line-height: 1.6;
     }
@@ -495,7 +541,7 @@
       content: 'JavaScript // Code.org App Lab';
       display: block;
       font-family: var(--spartan);
-      font-size: 0.72rem;
+      font-size: 0.85rem;
       letter-spacing: 0.25em;
       color: var(--gold);
       text-transform: uppercase;
@@ -514,14 +560,14 @@
 
     .copy-btn {
       font-family: var(--spartan);
-      font-size: 0.72rem;
+      font-size: 0.85rem;
       font-weight: 700;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       background: var(--gold);
       color: var(--navy);
       border: none;
-      padding: 8px 18px;
+      padding: 10px 20px;
       cursor: pointer;
       transition: background 0.2s, transform 0.1s;
     }
@@ -531,12 +577,11 @@
 
     pre {
       font-family: 'Courier New', monospace;
-      font-size: 0.9rem;
+      font-size: 1rem;
       line-height: 2.1;
       color: #e0e8f0;
       white-space: pre-wrap;
       overflow-x: auto;
-      word-break: break-word;
     }
 
     .c  { color: #6a8aaa; }
@@ -548,18 +593,19 @@
     /* ── RUBRIC ─────────────────────────────────────── */
     .rubric-wrap {
       border: 1px solid var(--rule);
+      overflow: hidden;
       overflow-x: auto;
     }
 
     .rubric-table {
       width: 100%;
+      min-width: 680px;
       border-collapse: collapse;
-      min-width: 780px;
     }
 
     .rubric-table th {
       font-family: var(--spartan);
-      font-size: 0.75rem;
+      font-size: 0.88rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       padding: 18px 20px;
@@ -579,7 +625,7 @@
     }
     .rubric-table th:nth-child(3)::after {
       content: ' ← THE GOAL';
-      font-size: 0.6rem;
+      font-size: 0.7rem;
       letter-spacing: 0.1em;
       color: var(--gold);
       display: block;
@@ -593,7 +639,7 @@
     }
     .rubric-table th:nth-child(4)::after {
       content: ' above & beyond';
-      font-size: 0.6rem;
+      font-size: 0.7rem;
       letter-spacing: 0.08em;
       color: #988443;
       display: block;
@@ -603,7 +649,7 @@
 
     .rubric-table td {
       padding: 20px 22px;
-      font-size: 0.9rem;
+      font-size: 1rem;
       line-height: 1.65;
       vertical-align: top;
       border-bottom: 1px solid var(--rule);
@@ -616,7 +662,7 @@
     .rubric-table td:nth-child(1) {
       font-family: var(--spartan);
       font-weight: 700;
-      font-size: 0.88rem;
+      font-size: 1rem;
       color: var(--navy);
       background: var(--off-white);
     }
@@ -645,7 +691,7 @@
       width: 28px; height: 28px;
       border-radius: 50%;
       font-family: var(--spartan);
-      font-size: 0.8rem;
+      font-size: 0.88rem;
       font-weight: 700;
       margin-right: 6px;
       vertical-align: middle;
@@ -660,7 +706,7 @@
       padding: 20px 24px;
       border-left: 4px solid var(--navy);
       background: var(--off-white);
-      font-size: 0.9rem;
+      font-size: 1rem;
       color: var(--black);
       line-height: 1.8;
     }
@@ -692,53 +738,18 @@
 
     .step-title {
       font-family: var(--spartan);
-      font-size: 0.9rem;
+      font-size: 1rem;
       font-weight: 700;
       letter-spacing: 0.1em;
       color: var(--navy);
       text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .step-body {
-      font-size: 0.9rem;
+      font-size: 1rem;
       color: var(--black);
       line-height: 1.7;
-    }
-
-    /* ── JUMP TO TOP ────────────────────────────────── */
-    .jump-top {
-      position: fixed;
-      right: 22px;
-      bottom: 22px;
-      width: 48px;
-      height: 48px;
-      border: 1px solid var(--rule);
-      border-radius: 999px;
-      background: var(--white);
-      color: var(--navy);
-      font-family: var(--spartan);
-      font-size: 1.2rem;
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(10px);
-      transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s ease;
-      z-index: 120;
-    }
-
-    .jump-top:hover {
-      background: var(--off-white);
-    }
-
-    .jump-top.visible {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
     }
 
     /* ── FOOTER ─────────────────────────────────────── */
@@ -748,7 +759,7 @@
       padding: 36px 80px;
       text-align: center;
       font-family: var(--spartan);
-      font-size: 0.6rem;
+      font-size: 0.75rem;
       letter-spacing: 0.28em;
       color: var(--white);
       text-transform: uppercase;
@@ -767,89 +778,40 @@
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px; left: 80px;
+      font-family: var(--spartan);
+      font-size: 0.75rem;
+      letter-spacing: 0.22em;
+      color: var(--navy);
+      font-weight: 700;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+    }
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
       50%       { transform: translateY(5px); }
     }
 
     /* ── RESPONSIVE ─────────────────────────────────── */
-    @media (max-width: 1100px) {
-      .hero,
-      section,
-      footer {
-        padding-left: 48px;
-        padding-right: 48px;
-      }
-
-      .scroll-hint-wrap {
-        left: 48px;
-      }
-    }
-
     @media (max-width: 900px) {
       .hero {
         grid-template-columns: 1fr;
-        gap: 36px;
-        padding-bottom: 140px;
+        padding: 72px 32px 64px;
+        gap: 40px;
       }
-
+      .scroll-hint { left: 32px; }
+      .toc-block { padding: 36px 32px 40px; }
+      .toc-list li { width: 100%; }
+      section { padding: 64px 32px; }
       .req-grid,
       .ideas-grid,
-      .share-steps,
-      .two-col {
-        grid-template-columns: 1fr;
-      }
-
-      .section-nav {
-        display: none;
-      }
-
-      .scroll-hint-wrap {
-        left: 48px;
-        right: 48px;
-        max-width: none;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .hero,
-      section,
-      footer {
-        padding-left: 24px;
-        padding-right: 24px;
-      }
-
-      .pitch-block,
-      .code-wrap {
-        padding-left: 24px;
-        padding-right: 24px;
-      }
-
-      .scroll-hint-wrap {
-        left: 24px;
-        right: 24px;
-        bottom: 24px;
-      }
-
-      .hero-meta {
-        gap: 20px;
-      }
-
-      .session-bar {
-        height: auto;
-        flex-direction: column;
-      }
-
-      .bar-seg {
-        min-height: 48px;
-      }
-
-      .jump-top {
-        right: 14px;
-        bottom: 14px;
-        width: 44px;
-        height: 44px;
-      }
+      .share-steps { grid-template-columns: 1fr; }
+      .two-col { grid-template-columns: 1fr; }
+      footer { padding: 28px 32px; }
+      .section-nav { right: 14px; }
+      .jump-top { left: 14px; }
     }
   </style>
 </head>
@@ -865,6 +827,11 @@
     <a href="#rubric"   class="nav-dot"></a>
     <a href="#share"    class="nav-dot"></a>
   </nav>
+
+  <!-- ── JUMP TO TOP ──────────────────────────────── -->
+  <button class="jump-top" id="jumpTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Jump to top">
+    <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
 
   <!-- ══ HERO ══════════════════════════════════════ -->
   <div class="hero" id="hero">
@@ -900,20 +867,21 @@
         <div class="timeline-sub">Both partners submit their own link</div>
       </div>
     </div>
+    <div class="scroll-hint">Scroll to explore</div>
+  </div>
 
-    <div class="scroll-hint-wrap">
-      <div class="scroll-hint">Scroll to explore</div>
-      <hr class="hero-divider" />
-      <nav class="hero-toc" aria-label="Table of contents">
-        <a href="#mission">Mission</a>
-        <a href="#standard">Standard</a>
-        <a href="#session">Session</a>
-        <a href="#ideas">Ideas</a>
-        <a href="#template">Template</a>
-        <a href="#rubric">Rubric</a>
-        <a href="#share">Submission</a>
-      </nav>
-    </div>
+  <!-- ══ TABLE OF CONTENTS ══════════════════════════ -->
+  <div class="toc-block">
+    <div class="toc-label">On this page</div>
+    <ul class="toc-list">
+      <li><a href="#mission">The Mission</a></li>
+      <li><a href="#standard">The Standard</a></li>
+      <li><a href="#session">Session Plan</a></li>
+      <li><a href="#ideas">Brainstorm Fuel</a></li>
+      <li><a href="#template">Starter Template</a></li>
+      <li><a href="#rubric">Evaluation &amp; Rubric</a></li>
+      <li><a href="#share">How to Submit</a></li>
+    </ul>
   </div>
 
   <!-- ══ MISSION ════════════════════════════════════ -->
@@ -1029,7 +997,7 @@
   <section id="ideas">
     <p class="section-eyebrow">Brainstorm Fuel</p>
     <h2 class="section-title">An app that <em>...</em></h2>
-    <p style="font-size:0.92rem; color:var(--muted); margin-bottom:36px; max-width:520px;">
+    <p style="font-size:1rem; color:var(--muted); margin-bottom:36px; max-width:520px;">
       Starting points, not assignments. Change anything. Combine two. Make it yours.
     </p>
     <div class="ideas-grid">
@@ -1080,9 +1048,9 @@
   <section id="template">
     <p class="section-eyebrow">Starter Template</p>
     <h2 class="section-title">The <em>shape</em> of your code</h2>
-    <p style="font-size:0.92rem; color:var(--muted); margin-bottom:36px; max-width:580px;">
+    <p style="font-size:1rem; color:var(--muted); margin-bottom:36px; max-width:580px;">
       This is the architecture your app should follow. The comments tell you what goes where.
-      Replace them with your own code. Do not rename <code style="font-family:monospace;color:var(--navy);background:var(--off-white);padding:2px 6px;font-size:0.88rem;border:1px solid var(--rule);">updateScreen()</code>.
+      Replace them with your own code. Do not rename <code style="font-family:monospace;color:var(--navy);background:var(--off-white);padding:2px 6px;font-size:0.95rem;border:1px solid var(--rule);">updateScreen()</code>.
     </p>
     <div style="margin-bottom: 0; display:flex; justify-content:flex-end;">
       <button class="copy-btn" id="copyBtn" onclick="copyCode()">Copy Code</button>
@@ -1136,7 +1104,7 @@
   <section id="rubric">
     <p class="section-eyebrow">Evaluation</p>
     <h2 class="section-title">How you'll be <em>scored</em></h2>
-    <p style="font-size:0.92rem; color:var(--black); margin-bottom:36px; max-width:600px; line-height:1.8;">
+    <p style="font-size:1rem; color:var(--black); margin-bottom:36px; max-width:600px; line-height:1.8;">
       Four categories. Three scores. <strong>A 2 is the goal</strong> -- it means your work meets the standard.
       A 3 means you went above and beyond. A 1 means something is missing and must be fixed.
     </p>
@@ -1207,8 +1175,6 @@
   </section>
 
   <footer>&nbsp;</footer>
-
-  <a href="#hero" class="jump-top" id="jumpTop" aria-label="Jump to top">↑</a>
 
   <script>
     // Copy code to clipboard
@@ -1290,15 +1256,15 @@ onEvent("your_button_id", "click", function() {
     }, { threshold: 0.3 });
     document.querySelectorAll('[id]').forEach(s => secObserver.observe(s));
 
-    // Jump to top button
+    // Jump to top visibility
     const jumpTop = document.getElementById('jumpTop');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
+      if (window.scrollY > 400) {
         jumpTop.classList.add('visible');
       } else {
         jumpTop.classList.remove('visible');
       }
-    });
+    }, { passive: true });
   </script>
 </body>
 </html>
