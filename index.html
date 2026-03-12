@@ -22,7 +22,10 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      font-size: clamp(16px, 1vw + 0.35rem, 18px);
+    }
 
     body {
       background: var(--white);
@@ -120,6 +123,7 @@
       margin-top: 40px;
       display: flex;
       gap: 36px;
+      flex-wrap: wrap;
       opacity: 0;
       animation: fadeUp 0.6s ease forwards 0.42s;
     }
@@ -178,6 +182,57 @@
       font-size: 0.85rem;
       color: var(--muted);
       margin-top: 2px;
+    }
+
+    /* ── HERO TOC ───────────────────────────────────── */
+    .scroll-hint-wrap {
+      position: absolute;
+      left: 80px;
+      bottom: 32px;
+      max-width: 420px;
+      z-index: 2;
+    }
+
+    .scroll-hint {
+      position: static;
+      font-family: var(--spartan);
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      color: var(--navy);
+      font-weight: 700;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+      margin-bottom: 12px;
+    }
+
+    .hero-divider {
+      border: 0;
+      border-top: 1px solid var(--rule);
+      margin: 0 0 14px 0;
+      width: 100%;
+    }
+
+    .hero-toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      font-family: var(--spartan);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+
+    .hero-toc a {
+      color: var(--navy);
+      opacity: 0.9;
+      transition: opacity 0.2s;
+    }
+
+    .hero-toc a:hover {
+      opacity: 1;
+      text-decoration: underline;
     }
 
     /* ── SECTION SHELL ──────────────────────────────── */
@@ -325,6 +380,8 @@
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
+      text-align: center;
+      padding: 0 10px;
     }
 
     .seg-plan    { background: var(--navy); color: var(--sky);  flex: 0 0 calc(50/90 * 100%); }
@@ -333,6 +390,7 @@
     .session-legend {
       display: flex;
       gap: 28px;
+      flex-wrap: wrap;
       font-size: 0.82rem;
       color: var(--black);
       font-family: var(--spartan);
@@ -478,6 +536,7 @@
       color: #e0e8f0;
       white-space: pre-wrap;
       overflow-x: auto;
+      word-break: break-word;
     }
 
     .c  { color: #6a8aaa; }
@@ -489,12 +548,13 @@
     /* ── RUBRIC ─────────────────────────────────────── */
     .rubric-wrap {
       border: 1px solid var(--rule);
-      overflow: hidden;
+      overflow-x: auto;
     }
 
     .rubric-table {
       width: 100%;
       border-collapse: collapse;
+      min-width: 780px;
     }
 
     .rubric-table th {
@@ -646,6 +706,41 @@
       line-height: 1.7;
     }
 
+    /* ── JUMP TO TOP ────────────────────────────────── */
+    .jump-top {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      width: 48px;
+      height: 48px;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      background: var(--white);
+      color: var(--navy);
+      font-family: var(--spartan);
+      font-size: 1.2rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+      transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s ease;
+      z-index: 120;
+    }
+
+    .jump-top:hover {
+      background: var(--off-white);
+    }
+
+    .jump-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
     /* ── FOOTER ─────────────────────────────────────── */
     footer {
       background: var(--navy);
@@ -672,20 +767,89 @@
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    .scroll-hint {
-      position: absolute;
-      bottom: 36px; left: 80px;
-      font-family: var(--spartan);
-      font-size: 0.6rem;
-      letter-spacing: 0.22em;
-      color: var(--navy);
-      font-weight: 700;
-      text-transform: uppercase;
-      animation: bounce 2s infinite;
-    }
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
       50%       { transform: translateY(5px); }
+    }
+
+    /* ── RESPONSIVE ─────────────────────────────────── */
+    @media (max-width: 1100px) {
+      .hero,
+      section,
+      footer {
+        padding-left: 48px;
+        padding-right: 48px;
+      }
+
+      .scroll-hint-wrap {
+        left: 48px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        padding-bottom: 140px;
+      }
+
+      .req-grid,
+      .ideas-grid,
+      .share-steps,
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .section-nav {
+        display: none;
+      }
+
+      .scroll-hint-wrap {
+        left: 48px;
+        right: 48px;
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero,
+      section,
+      footer {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      .pitch-block,
+      .code-wrap {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      .scroll-hint-wrap {
+        left: 24px;
+        right: 24px;
+        bottom: 24px;
+      }
+
+      .hero-meta {
+        gap: 20px;
+      }
+
+      .session-bar {
+        height: auto;
+        flex-direction: column;
+      }
+
+      .bar-seg {
+        min-height: 48px;
+      }
+
+      .jump-top {
+        right: 14px;
+        bottom: 14px;
+        width: 44px;
+        height: 44px;
+      }
     }
   </style>
 </head>
@@ -736,7 +900,20 @@
         <div class="timeline-sub">Both partners submit their own link</div>
       </div>
     </div>
-    <div class="scroll-hint">Scroll to explore</div>
+
+    <div class="scroll-hint-wrap">
+      <div class="scroll-hint">Scroll to explore</div>
+      <hr class="hero-divider" />
+      <nav class="hero-toc" aria-label="Table of contents">
+        <a href="#mission">Mission</a>
+        <a href="#standard">Standard</a>
+        <a href="#session">Session</a>
+        <a href="#ideas">Ideas</a>
+        <a href="#template">Template</a>
+        <a href="#rubric">Rubric</a>
+        <a href="#share">Submission</a>
+      </nav>
+    </div>
   </div>
 
   <!-- ══ MISSION ════════════════════════════════════ -->
@@ -1031,6 +1208,8 @@
 
   <footer>&nbsp;</footer>
 
+  <a href="#hero" class="jump-top" id="jumpTop" aria-label="Jump to top">↑</a>
+
   <script>
     // Copy code to clipboard
     function copyCode() {
@@ -1110,6 +1289,16 @@ onEvent("your_button_id", "click", function() {
       });
     }, { threshold: 0.3 });
     document.querySelectorAll('[id]').forEach(s => secObserver.observe(s));
+
+    // Jump to top button
+    const jumpTop = document.getElementById('jumpTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        jumpTop.classList.add('visible');
+      } else {
+        jumpTop.classList.remove('visible');
+      }
+    });
   </script>
 </body>
 </html>
